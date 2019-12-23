@@ -1,10 +1,10 @@
-use crate::reg_tweak::RegTweak;
-
-pub struct Tweak<'a> {
-  pub t_type: TweakType<'a>,
-  pub desc:&'a str
+pub(crate) struct Tweak<'a> {
+  pub(crate) name: &'a str,
+  pub(crate) desc: &'a str,
+  pub(crate) content: &'a dyn Tweakable,
 }
 
-pub enum TweakType<'a> {
-  Reg(RegTweak<'a>)
+pub(crate) trait Tweakable {
+  fn is_tweaked(&self) -> bool;
+  fn tweak<'a>(&self) -> Result<(), &'a str>;
 }
